@@ -1,26 +1,32 @@
 package model;
 
-public class Subtask extends Task {
-    Epic epic;
+import java.util.Objects;
 
-    public Subtask(String name, String description, Epic epic) {
-        super(name, description);
+public class Subtask extends Task {
+    private int epicId;
+
+   /* public Subtask(String name, String description, Epic epic) {
+
 
         this.epic = epic;
-    }
+    }*/
 
-    public Subtask(String name, TaskStatus status, String description, Epic epic) {
+    public Subtask(String name, TaskStatus status, String description, int epicId) {
         super(name, status, description);
 
-        this.epic = epic;
+        this.epicId = epicId;
     }
 
-    public Epic getEpic() {
-        return epic;
+    public Subtask(int subTaskId, String name, TaskStatus status, String description) {
+        super(subTaskId, name, status, description);
     }
 
-    public void setEpic(Epic epic) {
-        this.epic = epic;
+    public int getEpic() {
+        return epicId;
+    }
+
+    public void setEpic(int epicId) {
+        this.epicId = epicId;
     }
 
     @Override
@@ -30,7 +36,21 @@ public class Subtask extends Task {
                 ", name='" + getName() + '\'' +
                 ", status='" + getStatus() + '\'' +
                 ", description='" + getDescription() + '\'' +
-                ", epic ='" + epic.getName() + '\'' +
+                ", epic ='" + getEpic() + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Subtask subtask = (Subtask) o;
+        return epicId == subtask.epicId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), epicId);
     }
 }
