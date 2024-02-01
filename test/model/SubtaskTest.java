@@ -2,7 +2,7 @@ package model;
 
 import org.junit.jupiter.api.Test;
 import service.HistoryManager;
-import service.Manager;
+import service.Managers;
 import service.TaskManager;
 
 import java.util.List;
@@ -22,7 +22,7 @@ class SubtaskTest {
 
     @Test
     public void addNewSubTask() {
-        TaskManager taskManager = Manager.getDefaultTaskManager();
+        TaskManager taskManager = Managers.getDefaultTaskManager();
         Epic epic = taskManager.createEpic(new Epic("nameEpic", TaskStatus.NEW, "descriptionEpic"));
         Subtask subtask = taskManager.createSubTask(new Subtask("Test addNewEpic", TaskStatus.NEW, "Test addNewEpic description", epic.getId()));
         /*final int subtaskId = taskManager.createSubTask(subtask).getId();*/
@@ -46,7 +46,7 @@ class SubtaskTest {
     void addSubTaskInHistory() {
         Epic epic = new Epic("nameEpic", TaskStatus.NEW, "descriptionEpic");
         Subtask subtask = new Subtask("Test addNewEpic", TaskStatus.NEW, "Test addNewEpic description", epic.getId());
-        HistoryManager historyManager = Manager.getDefaultHistory();
+        HistoryManager historyManager = Managers.getDefaultHistory();
         historyManager.add(subtask);
         final List<Task> history = historyManager.getAll();
         assertNotNull(history, "История не пустая.");

@@ -17,6 +17,11 @@ public class Epic extends Task {
         super(id, name, status, description);
     }
 
+    public Epic(Epic epic) {
+
+        super(epic.getId(), epic.getName(), epic.getStatus(), epic.getDescription());
+    }
+
     public List<Integer> getSubTasks() {
         return subTasks;
     }

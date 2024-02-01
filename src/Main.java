@@ -2,14 +2,14 @@ import model.Epic;
 import model.Subtask;
 import model.Task;
 import model.TaskStatus;
-import service.Manager;
+import service.Managers;
 import service.TaskManager;
 
 public class Main {
 
     public static void main(String[] args) {
         // Тесты по Task
-        TaskManager taskManager = Manager.getDefaultTaskManager();
+        TaskManager taskManager = Managers.getDefaultTaskManager();
         Task task1 = taskManager.createTask(new Task("Делать проект 4 спринта", TaskStatus.NEW, "Понять как сделать проект 4 спринта!!!"));
         System.out.println("Создали задачу: " + task1);
         System.out.println("______________________________________");

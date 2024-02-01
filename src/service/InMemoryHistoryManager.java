@@ -1,5 +1,7 @@
 package service;
 
+import model.Epic;
+import model.Subtask;
 import model.Task;
 
 import java.util.LinkedList;
@@ -13,7 +15,17 @@ public class InMemoryHistoryManager implements HistoryManager{
         if (history.size() > 9) {
             history.removeFirst();
         }
-        history.add(task);
+        Epic savedEpic;
+        Subtask savedSubtask;
+        if (task instanceof Epic) {
+           savedEpic = new Epic((Epic) task);
+            history.add(savedEpic);
+        } else if (task instanceof Subtask) {
+            savedSubtask = new Subtask((Subtask) task);
+            history.add(savedSubtask);
+        } else {
+            history.add(task);
+        }
     }
 
     @Override

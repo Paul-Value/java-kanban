@@ -3,7 +3,7 @@ package model;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import service.HistoryManager;
-import service.Manager;
+import service.Managers;
 import service.TaskManager;
 
 import java.util.List;
@@ -24,7 +24,7 @@ class EpicTest {
 
     @Test
     public void addNewEpic() {
-        TaskManager taskManager = Manager.getDefaultTaskManager();
+        TaskManager taskManager = Managers.getDefaultTaskManager();
         Epic epic = new Epic("Test addNewEpic", TaskStatus.NEW, "Test addNewEpic description");
         final int epicId = taskManager.createEpic(epic).getId();
 
@@ -46,7 +46,7 @@ class EpicTest {
     @Test
     void addEpicInHistory() {
         Task task = new Task("Test addNewTask", TaskStatus.NEW, "Test addNewTask description");
-        HistoryManager historyManager = Manager.getDefaultHistory();
+        HistoryManager historyManager = Managers.getDefaultHistory();
         historyManager.add(task);
         final List<Task> history = historyManager.getAll();
         assertNotNull(history, "История не пустая.");
