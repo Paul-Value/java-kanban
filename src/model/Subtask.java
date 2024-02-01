@@ -5,12 +5,6 @@ import java.util.Objects;
 public class Subtask extends Task {
     private int epicId;
 
-   /* public Subtask(String name, String description, Epic epic) {
-
-
-        this.epic = epic;
-    }*/
-
     public Subtask(String name, TaskStatus status, String description, int epicId) {
         super(name, status, description);
 

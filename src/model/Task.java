@@ -8,6 +8,12 @@ public class Task {
     private TaskStatus status;
     private String description;
 
+    public Task(Task task){
+        this.id = task.id;
+        this.name = task.name;
+        this.status = task.status;
+        this.description = task.description;
+    }
 
     public Task(int id, String name, TaskStatus status, String description) {
         this.id = id;
@@ -69,11 +75,11 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id && Objects.equals(name, task.name) && status == task.status && Objects.equals(description, task.description);
+        return id == task.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, status, description);
+        return Objects.hash(id);
     }
 }

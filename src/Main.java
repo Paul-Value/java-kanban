@@ -2,13 +2,14 @@ import model.Epic;
 import model.Subtask;
 import model.Task;
 import model.TaskStatus;
+import service.Manager;
 import service.TaskManager;
 
 public class Main {
 
     public static void main(String[] args) {
         // Тесты по Task
-        TaskManager taskManager = new TaskManager();
+        TaskManager taskManager = Manager.getDefaultTaskManager();
         Task task1 = taskManager.createTask(new Task("Делать проект 4 спринта", TaskStatus.NEW, "Понять как сделать проект 4 спринта!!!"));
         System.out.println("Создали задачу: " + task1);
         System.out.println("______________________________________");
@@ -37,6 +38,12 @@ public class Main {
         System.out.println("Удалили все задачи");
         System.out.println("Получаем все задачи: " + taskManager.getTasks());
         System.out.println("______________________________________");
+
+        System.out.println("++++++++++++++++++++++++++++++++++++++");
+        for (Task task : taskManager.getHistory()) {
+            System.out.println(task);
+        }
+        System.out.println("++++++++++++++++++++++++++++++++++++++");
 
         //Тесты по Epic
         Epic epic1 = taskManager.createEpic(new Epic("Выполнить проект 4 спринта", TaskStatus.NEW,
@@ -72,6 +79,12 @@ public class Main {
         System.out.println("Удалили все Эпики");
         System.out.println("Получаем все Эпики: " + taskManager.getEpics());
         System.out.println("______________________________________");
+
+        System.out.println("++++++++++++++++++++++++++++++++++++++");
+        for (Task task : taskManager.getHistory()) {
+            System.out.println(task);
+        }
+        System.out.println("++++++++++++++++++++++++++++++++++++++");
 
         //Тесты по SubTask
         Epic epic3 = taskManager.createEpic(new Epic("Проект 4 спринта",
@@ -125,5 +138,11 @@ public class Main {
         System.out.println("Получаем все Сабтаски: " + taskManager.getSubTasks());
         System.out.println("Получаем все Сабтаски у Эпика 3: " + epic3);
         System.out.println("______________________________________");
+
+        System.out.println("++++++++++++++++++++++++++++++++++++++");
+        for (Task task : taskManager.getHistory()) {
+            System.out.println(task);
+        }
+        System.out.println("++++++++++++++++++++++++++++++++++++++");
     }
 }
