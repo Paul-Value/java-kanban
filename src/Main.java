@@ -1,5 +1,3 @@
-import model.Epic;
-import model.Subtask;
 import model.Task;
 import model.TaskStatus;
 import service.Managers;
@@ -10,9 +8,16 @@ public class Main {
     public static void main(String[] args) {
         // Тесты по Task
         TaskManager taskManager = Managers.getDefaultTaskManager();
-        Task task1 = taskManager.createTask(new Task("Делать проект 4 спринта", TaskStatus.NEW, "Понять как сделать проект 4 спринта!!!"));
+        Task task1 = taskManager.createTask(new Task("Делать проект 4 спринта", TaskStatus.NEW,
+                "Понять как сделать проект 4 спринта!!!"));
         System.out.println("Создали задачу: " + task1);
         System.out.println("______________________________________");
+
+        System.out.println("++++++++++++++++++++++++++++++++++++++");
+        for (Task task : taskManager.getHistory()) {
+            System.out.println(task);
+        }
+        System.out.println("++++++++++++++++++++++++++++++++++++++");
 
         Task taskFromManager = taskManager.getTaskById(task1.getId());
         System.out.println("Получаем задачу по id: " + taskFromManager);
@@ -26,13 +31,28 @@ public class Main {
         System.out.println("Создали задачу: " + task2);
         System.out.println("______________________________________");
 
+        System.out.println("Получаем задачу по id: " + taskManager.getTaskById(task2.getId()));
+        System.out.println("______________________________________");
+
         System.out.println("Получаем все задачи: " + taskManager.getTasks());
         System.out.println("______________________________________");
+
+        System.out.println("++++++++++++++++++++++++++++++++++++++");
+        for (Task task : taskManager.getHistory()) {
+            System.out.println(task);
+        }
+        System.out.println("++++++++++++++++++++++++++++++++++++++");
 
         taskManager.deleteTaskById(taskFromManager.getId());
         System.out.println("Удалили задачу по id: " + taskManager.getTaskById(1));
         System.out.println("Получаем все задачи: " + taskManager.getTasks());
         System.out.println("______________________________________");
+
+        System.out.println("++++++++++++++++++++++++++++++++++++++");
+        for (Task task : taskManager.getHistory()) {
+            System.out.println(task);
+        }
+        System.out.println("++++++++++++++++++++++++++++++++++++++");
 
         taskManager.deleteAllTasks();
         System.out.println("Удалили все задачи");
@@ -45,7 +65,7 @@ public class Main {
         }
         System.out.println("++++++++++++++++++++++++++++++++++++++");
 
-        //Тесты по Epic
+        /*//Тесты по Epic
         Epic epic1 = taskManager.createEpic(new Epic("Выполнить проект 4 спринта", TaskStatus.NEW,
                 "Разбить на подзадачи "));
         System.out.println("Создали Эпик: " + epic1);
@@ -143,6 +163,6 @@ public class Main {
         for (Task task : taskManager.getHistory()) {
             System.out.println(task);
         }
-        System.out.println("++++++++++++++++++++++++++++++++++++++");
+        System.out.println("++++++++++++++++++++++++++++++++++++++");*/
     }
 }
