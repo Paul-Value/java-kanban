@@ -16,7 +16,6 @@ class InMemoryHistoryManagerTest {
 
     @Test
     void addInHistory() {
-        TaskManager taskManager = Managers.getDefaultTaskManager();
         HistoryManager historyManager = Managers.getDefaultHistory();
         Epic epic = new Epic(1,"name", TaskStatus.NEW, "description");
         historyManager.add(epic);
