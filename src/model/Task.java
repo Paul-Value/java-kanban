@@ -8,7 +8,7 @@ public class Task {
     private TaskStatus status;
     private String description;
 
-    public Task(Task task){
+    public Task(Task task) {
         this.id = task.id;
         this.name = task.name;
         this.status = task.status;
