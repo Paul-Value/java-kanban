@@ -1,3 +1,5 @@
+import model.Epic;
+import model.Subtask;
 import model.Task;
 import model.TaskStatus;
 import service.Managers;
@@ -65,7 +67,7 @@ public class Main {
         }
         System.out.println("++++++++++++++++++++++++++++++++++++++");
 
-        /*//Тесты по Epic
+        //Тесты по Epic
         Epic epic1 = taskManager.createEpic(new Epic("Выполнить проект 4 спринта", TaskStatus.NEW,
                 "Разбить на подзадачи "));
         System.out.println("Создали Эпик: " + epic1);
@@ -163,6 +165,6 @@ public class Main {
         for (Task task : taskManager.getHistory()) {
             System.out.println(task);
         }
-        System.out.println("++++++++++++++++++++++++++++++++++++++");*/
+        System.out.println("++++++++++++++++++++++++++++++++++++++");
     }
 }
