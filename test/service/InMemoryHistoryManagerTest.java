@@ -3,6 +3,7 @@ package service;
 import model.Epic;
 import model.Task;
 import model.TaskStatus;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,11 +15,16 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @DisplayName("Тесты Истории")
 class InMemoryHistoryManagerTest {
 
+    HistoryManager historyManager;
+
+    @BeforeEach
+    public void beforeEach() {
+        historyManager = Managers.getDefaultHistory();
+        Epic epic = new Epic(1, "name", TaskStatus.NEW, "description");
+        historyManager.add(epic);
+    }
     @Test
     void addInHistory() {
-        HistoryManager historyManager = Managers.getDefaultHistory();
-        Epic epic = new Epic(1,"name", TaskStatus.NEW, "description");
-        historyManager.add(epic);
         final List<Task> history = historyManager.getAll();
         assertNotNull(history, "История не пустая.");
         assertEquals(1, history.size(), "История не пустая.");
@@ -26,9 +32,6 @@ class InMemoryHistoryManagerTest {
 
     @Test
     void removeNode() {
-        HistoryManager historyManager = Managers.getDefaultHistory();
-        Epic epic = new Epic(1,"name", TaskStatus.NEW, "description");
-        historyManager.add(epic);
         Task task = new Task(2,"NewTask", TaskStatus.NEW, "description");
         historyManager.add(task);
         Task task2 = new Task(3,"NewTask2", TaskStatus.NEW, "description");

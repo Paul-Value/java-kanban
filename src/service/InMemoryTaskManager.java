@@ -5,7 +5,10 @@ import model.Subtask;
 import model.Task;
 import model.TaskStatus;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
     private final Map<Integer, Task> tasks;
@@ -169,6 +172,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteAllSubTasks() {
+        for (Integer subtaskId : subTasks.keySet()) {
+            historyManager.remove(subtaskId);
+        }
         subTasks.clear();
         for (Epic epic : epics.values()) {
             epic.getSubTasks().clear();
