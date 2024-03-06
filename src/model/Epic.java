@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Epic extends Task {
-    private List<Integer> subTasks = new ArrayList<>();
+    private final List<Integer> subTasks = new ArrayList<>();
 
     public Epic(String name, TaskStatus status, String description) {
 
@@ -27,7 +27,7 @@ public class Epic extends Task {
     }
 
     public void setSubTasks(List<Integer> subTasks) {
-        for (int sub : this.subTasks ) {
+        for (int sub : this.subTasks) {
             sub = subTasks.get(this.subTasks.indexOf(sub));
         }
     }

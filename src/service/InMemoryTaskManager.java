@@ -5,7 +5,10 @@ import model.Subtask;
 import model.Task;
 import model.TaskStatus;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
     private final Map<Integer, Task> tasks;
@@ -34,6 +37,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteAllTasks() {
+        for (Integer taskId : tasks.keySet()) {
+            historyManager.remove(taskId);
+        }
         tasks.clear();
     }
 
@@ -66,6 +72,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteTaskById(int id) {
         tasks.remove(id);
+        historyManager.remove(id);
     }
 
 
@@ -77,6 +84,12 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteAllEpics() {
+        for (Integer epicId : epics.keySet()) {
+            historyManager.remove(epicId);
+        }
+        for (Integer subtaskId : subTasks.keySet()) {
+            historyManager.remove(subtaskId);
+        }
         epics.clear();
         subTasks.clear();
     }
@@ -115,6 +128,7 @@ public class InMemoryTaskManager implements TaskManager {
         for (Integer sub : removedEpic.getSubTasks()) {
             subTasks.remove(sub);
         }
+        historyManager.remove(id);
     }
 
      @Override
@@ -158,6 +172,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteAllSubTasks() {
+        for (Integer subtaskId : subTasks.keySet()) {
+            historyManager.remove(subtaskId);
+        }
         subTasks.clear();
         for (Epic epic : epics.values()) {
             epic.getSubTasks().clear();
@@ -210,6 +227,7 @@ public class InMemoryTaskManager implements TaskManager {
         Epic epic = epics.get(removeSubtask.getEpic());
         epic.getSubTasks().remove((Integer) removeSubtask.getId());
         calculateEpicStatus(epic);
+        historyManager.remove(id);
     }
 
     @Override
