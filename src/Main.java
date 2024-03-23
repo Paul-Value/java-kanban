@@ -44,6 +44,7 @@ public class Main {
         System.out.println("---------------------------------------------------------");
         FileBackedTaskManager fileBackedTaskManager1 = new FileBackedTaskManager(file);
         System.out.println("Проверка чтения из файла" + fileBackedTaskManager1.getSubTasks());
+
         fileBackedTaskManager1 = FileBackedTaskManager.loadFromFile(file);
         System.out.println("Проверка чтения из файла" + fileBackedTaskManager1.getSubTasks());
 

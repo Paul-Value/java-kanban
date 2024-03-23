@@ -238,7 +238,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             reader.readLine();
             while (true) {
                 String line = reader.readLine();
-                if (line.isEmpty()) {
+                if (line == null || line.isEmpty()) {
                     break;
                 }
                 final Task task = fromString(line);
@@ -259,6 +259,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             }
 
             String line = reader.readLine();
+            if (line == null || line.isEmpty()) {
+                return;
+            }
             String[] historyIds = line.split(",");
             for (String id : historyIds) {
                 historyManager.add(backedTasks.get(Integer.parseInt(id)));
