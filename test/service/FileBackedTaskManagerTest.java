@@ -2,6 +2,7 @@ package service;
 
 import model.Task;
 import model.TaskStatus;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -45,5 +46,10 @@ class FileBackedTaskManagerTest {
         FileBackedTaskManager fileBackedTaskManager1 = FileBackedTaskManager.loadFromFile(file);
         assertEquals("Проверка", fileBackedTaskManager1.getTasks().get(0).getDescription(),
                 "Несовпадение описания Task");
+    }
+
+    @AfterEach
+    void afterEach() {
+        file.deleteOnExit();
     }
 }
