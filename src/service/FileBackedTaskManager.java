@@ -11,13 +11,12 @@ import java.util.Map;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
-    final Map<Integer, Task> backedTasks = new HashMap<>();
+    private final Map<Integer, Task> backedTasks = new HashMap<>();
     private final File file;
     public static final String TASK_CSV = "task.csv";
 
     public FileBackedTaskManager(File file) {
         this.file = file;
-        //this.historyManager = Managers.getDefaultHistory();
     }
 
     public void init() {
@@ -194,7 +193,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String name = columns[2];
         String description = columns[4];
         TaskStatus status = TaskStatus.valueOf(columns[3]);
-        //int epicId = Integer.parseInt(columns[5]);
 
         TaskType type = TaskType.valueOf(columns[1]);
         Task task = null;

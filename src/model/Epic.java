@@ -28,9 +28,6 @@ public class Epic extends Task {
     }
 
     public void setSubTasks(List<Integer> subTasks) {
-        /*for (int sub : this.subTasks) {
-            sub = subTasks.get(this.subTasks.indexOf(sub));
-        }*/
         this.subTasks = new ArrayList<>(subTasks);
     }
 
