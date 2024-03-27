@@ -6,11 +6,14 @@
     <copyLibs>true</copyLibs>
     <scanBeforeCheckin>true</scanBeforeCheckin>
     <option name="thirdPartyClasspath" />
-    <option name="activeLocationIds" />
+    <option name="activeLocationIds">
+      <option value="adf799b1-65bd-48f0-b7cf-56609710f4d6" />
+    </option>
     <option name="locations">
       <list>
         <ConfigurationLocation id="bundled-sun-checks" type="BUNDLED" scope="All" description="Sun Checks">(bundled)</ConfigurationLocation>
         <ConfigurationLocation id="bundled-google-checks" type="BUNDLED" scope="All" description="Google Checks">(bundled)</ConfigurationLocation>
+        <ConfigurationLocation id="adf799b1-65bd-48f0-b7cf-56609710f4d6" type="HTTP_URL" scope="All" description="Java kanban">https://raw.githubusercontent.com/yandex-praktikum/java-kanban/ci/checkstyle.xml</ConfigurationLocation>
       </list>
     </option>
   </component>

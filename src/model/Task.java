@@ -28,6 +28,10 @@ public class Task {
         this.description = description;
     }
 
+    public Integer getEpicId() {
+        return null;
+    }
+
     public int getId() {
         return id;
     }
@@ -54,6 +58,10 @@ public class Task {
 
     public String getDescription() {
         return description;
+    }
+
+    public TaskType getType() {
+        return TaskType.TASK;
     }
 
     public void setDescription(String description) {

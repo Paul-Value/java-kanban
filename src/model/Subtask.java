@@ -2,6 +2,7 @@ package model;
 
 import java.util.Objects;
 
+@SuppressWarnings("checkstyle:Regexp")
 public class Subtask extends Task {
     private int epicId;
 
@@ -18,15 +19,27 @@ public class Subtask extends Task {
     public Subtask(Subtask subtask) {
         super(subtask.getId(),subtask.getName(), subtask.getStatus(), subtask.getDescription());
 
-        this.epicId = subtask.getEpic();
+        this.epicId = subtask.getEpicId();
     }
 
-    public int getEpic() {
+    public Subtask(int id, String name, TaskStatus status, String description, int epicId) {
+        super(id, name, status, description);
+
+        this.epicId = epicId;
+    }
+
+    @Override
+    public Integer getEpicId() {
         return epicId;
     }
 
     public void setEpic(int epicId) {
         this.epicId = epicId;
+    }
+
+    @Override
+    public TaskType getType() {
+        return TaskType.SUBTASK;
     }
 
     @Override
@@ -36,7 +49,7 @@ public class Subtask extends Task {
                 ", name='" + getName() + '\'' +
                 ", status='" + getStatus() + '\'' +
                 ", description='" + getDescription() + '\'' +
-                ", epic ='" + getEpic() + '\'' +
+                ", epic ='" + getEpicId() + '\'' +
                 '}';
     }
 

@@ -1,0 +1,6 @@
+id,type,name,status,description,epic
+1,TASK,Проверка записи в файл,NEW,Проверка,null
+3,SUBTASK,Проверка сабтаск,NEW,сабтаск,2
+2,EPIC,Проверка Эпика,NEW,ПроверОчка,null
+
+1,2,3

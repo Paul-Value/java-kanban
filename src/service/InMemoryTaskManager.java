@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
-    private final Map<Integer, Task> tasks;
-    private final Map<Integer, Epic> epics;
-    private final Map<Integer, Subtask> subTasks;
-    private final HistoryManager historyManager;
+    protected final Map<Integer, Task> tasks;
+    final Map<Integer, Epic> epics;
+    final Map<Integer, Subtask> subTasks;
+    final HistoryManager historyManager;
     int counter = 0;
 
     public InMemoryTaskManager() {
@@ -194,13 +194,13 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Subtask createSubTask(Subtask subTask) {
-        if (epics.get(subTask.getEpic()) == null) {
+        if (epics.get(subTask.getEpicId()) == null) {
             System.out.println("Такого Эпика не существует, невозможно создать Сабтаск");
             return null;
         }
         subTask.setId(generateId());
         subTasks.put(subTask.getId(), subTask);
-        Epic relatedEpic = epics.get(subTask.getEpic());
+        Epic relatedEpic = epics.get(subTask.getEpicId());
         relatedEpic.getSubTasks().add(subTask.getId());
         calculateEpicStatus(relatedEpic);
         return subTask;
@@ -209,13 +209,13 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void updateSubTask(Subtask subTask) {
         //subtask.setId();
-        int epicId = subTasks.get(subTask.getId()).getEpic();
+        int epicId = subTasks.get(subTask.getId()).getEpicId();
         subTask.setEpic(epicId);
         if (subTasks.get(subTask.getId()) == null || epics.get(epicId) == null) {
             System.out.println("Невозможно обновить Сабтаск");
         }
         subTasks.put(subTask.getId(), subTask);
-        Epic epic = epics.get(subTask.getEpic());
+        Epic epic = epics.get(subTask.getEpicId());
         calculateEpicStatus(epic);
         historyManager.add(subTask);
     }
@@ -224,7 +224,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteSubTaskById(int id) {
         Subtask removeSubtask = subTasks.remove(id);
 
-        Epic epic = epics.get(removeSubtask.getEpic());
+        Epic epic = epics.get(removeSubtask.getEpicId());
         epic.getSubTasks().remove((Integer) removeSubtask.getId());
         calculateEpicStatus(epic);
         historyManager.remove(id);
