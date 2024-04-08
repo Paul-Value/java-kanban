@@ -43,4 +43,16 @@ class InMemoryHistoryManagerTest {
         final List<Task> history2 = historyManager.getAll();
         assertEquals(2, history2.size(), "Не удалилась задача");
     }
+
+    @Test
+    void noDuplicateTasksInHistory() {
+        TaskManager tm = Managers.getDefaultTaskManager();
+        Task task = tm.createTask(new Task("NewTask", TaskStatus.NEW, "description"));
+        Task taskById = tm.getTaskById(task.getId());
+        Task task1 = tm.createTask(new Task("NewTask", TaskStatus.NEW, "description"));
+        Task taskById1 = tm.getTaskById(task1.getId());
+        Task taskById2 = tm.getTaskById(task1.getId());
+        assertEquals(2, tm.getHistory().size());
+
+    }
 }
