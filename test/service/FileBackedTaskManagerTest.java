@@ -22,7 +22,6 @@ class FileBackedTaskManagerTest {
     public void beforeEach() {
         try {
             file = File.createTempFile("text", ".temp");
-            //FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(file);
         } catch (IOException e) {
             throw new ManagerSaveException("Ошибка в файле", e);
         }

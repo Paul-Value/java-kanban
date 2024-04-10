@@ -1,5 +1,6 @@
 package model;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import service.HistoryManager;
@@ -51,5 +52,63 @@ class EpicTest {
         final List<Task> history = historyManager.getAll();
         assertNotNull(history, "История не пустая.");
         assertEquals(1, history.size(), "История не пустая.");
+    }
+
+    TaskManager taskManager;
+    Epic epicNew;
+
+
+    @BeforeEach
+    void beforeEach() {
+        taskManager = Managers.getDefaultTaskManager();
+        epicNew = new Epic(1, "Test Epic", TaskStatus.NEW, "Test epic");
+        taskManager.createEpic(epicNew);
+    }
+
+    @Test
+    void statusShouldBeNew() {
+        TaskManager taskManager = Managers.getDefaultTaskManager();
+        taskManager.createEpic(new Epic(1, "Test Epic", TaskStatus.IN_PROGRESS, "Test Epic description"));
+        Epic epic = taskManager.getEpicById(1);
+        final int epicId = epic.getId();
+        Subtask subtask = taskManager.createSubTask(new Subtask("Subtask", TaskStatus.NEW,
+                "sub description", epicId));
+        assertEquals(TaskStatus.NEW, epic.getStatus());
+    }
+
+    @Test
+    void statusShouldBeInProgress() {
+        Subtask subtask = taskManager.createSubTask(new Subtask("Subtask", TaskStatus.NEW,
+                "sub description", epicNew.getId()));
+        Subtask subtask1 = taskManager.createSubTask(new Subtask("Subtask", TaskStatus.IN_PROGRESS,
+                "sub description", epicNew.getId()));
+        assertEquals(TaskStatus.IN_PROGRESS, epicNew.getStatus());
+    }
+
+    @Test
+    void statusShouldBeDone() {
+        Subtask subtask = taskManager.createSubTask(new Subtask("Subtask", TaskStatus.DONE,
+                "sub description", epicNew.getId()));
+        Subtask subtask1 = taskManager.createSubTask(new Subtask("Subtask", TaskStatus.DONE,
+                "sub description", epicNew.getId()));
+        assertEquals(TaskStatus.DONE, epicNew.getStatus());
+    }
+
+    @Test
+    void statusShouldBeInProgress1() {
+        Subtask subtask = taskManager.createSubTask(new Subtask("Subtask", TaskStatus.DONE,
+                "sub description", epicNew.getId()));
+        Subtask subtask1 = taskManager.createSubTask(new Subtask("Subtask", TaskStatus.NEW,
+                "sub description", epicNew.getId()));
+        assertEquals(TaskStatus.IN_PROGRESS, epicNew.getStatus());
+    }
+
+    @Test
+    void statusShouldBeInProgress2() {
+        Subtask subtask = taskManager.createSubTask(new Subtask("Subtask", TaskStatus.IN_PROGRESS,
+                "sub description", epicNew.getId()));
+        Subtask subtask1 = taskManager.createSubTask(new Subtask("Subtask", TaskStatus.IN_PROGRESS,
+                "sub description", epicNew.getId()));
+        assertEquals(TaskStatus.IN_PROGRESS, epicNew.getStatus());
     }
 }

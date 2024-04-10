@@ -3,10 +3,10 @@ package service;
 import model.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -14,6 +14,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     private final Map<Integer, Task> backedTasks = new HashMap<>();
     private final File file;
     public static final String TASK_CSV = "task.csv";
+    public static final String NULL_STRING = "null";
 
     public FileBackedTaskManager(File file) {
         this.file = file;
@@ -157,7 +158,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     public void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, UTF_8))) {
-            writer.write("id,type,name,status,description,epic");
+            writer.write("id,type,name,status,description,epic,startTime,duration");
             writer.newLine();
 
             for (Task task : getTasks()) {
@@ -184,7 +185,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private String toString(Task task) {
         return task.getId() + "," + task.getType() + "," + task.getName() + "," + task.getStatus()
-                + "," + task.getDescription() + "," + task.getEpicId();
+                + "," + task.getDescription() + "," + task.getEpicId() + "," + task.getStartTime() + "," + task.getDuration();
     }
 
     private Task fromString(String value) {
@@ -193,16 +194,24 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String name = columns[2];
         String description = columns[4];
         TaskStatus status = TaskStatus.valueOf(columns[3]);
+        LocalDateTime startTime = null;
+        Duration duration = null;
+
+        if (!columns[6].equals(NULL_STRING) && !columns[7].equals(NULL_STRING)) {
+            startTime = LocalDateTime.parse(columns[6]);
+            duration = Duration.parse(columns[7]);
+        }
 
         TaskType type = TaskType.valueOf(columns[1]);
         Task task = null;
         switch (type) {
             case TASK:
-                task = new Task(id, name, status, description);
+                task = new Task(id, name, status, description, startTime, duration);
                 break;
 
             case SUBTASK:
-                task = new Subtask(id, name, status, description, Integer.parseInt(columns[5]));
+                int epicId = Integer.parseInt(columns[5]);
+                task = new Subtask(id, name, status, description, startTime, duration, epicId);
                 break;
 
             case EPIC:
@@ -215,6 +224,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     }
                 }
                 epic.setSubTasks(epicSubtasks);
+                calculateEpicTime(epic);
                 return epic;
         }
         return task;
@@ -222,11 +232,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     static String toString(HistoryManager manager) {
         //String sb = "";
-        List<String> ids = new ArrayList<>();
-        for (Task task : manager.getAll()) {
-            String id = String.valueOf(task.getId());
-            ids.add(id);
-        }
+        List<String> ids = manager.getAll().stream().map(task -> String.valueOf(task.getId())).collect(Collectors.toList());
         return String.join(",", ids);
     }
 
@@ -261,9 +267,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 return;
             }
             String[] historyIds = line.split(",");
-            for (String id : historyIds) {
-                historyManager.add(backedTasks.get(Integer.parseInt(id)));
-            }
+            Arrays.stream(historyIds)
+                    .map(id -> backedTasks.get(Integer.parseInt(id)))
+                    .forEach(historyManager::add);
+
+            backedTasks.values().forEach(this::addToPriorityTasks);
+
 
         } catch (IOException e) {
             throw new ManagerSaveException("Ошибка в файле: " + file.getAbsolutePath(), e);

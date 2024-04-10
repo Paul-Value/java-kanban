@@ -1,8 +1,9 @@
 package model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
-@SuppressWarnings("checkstyle:Regexp")
 public class Subtask extends Task {
     private int epicId;
 
@@ -28,6 +29,16 @@ public class Subtask extends Task {
         this.epicId = epicId;
     }
 
+    public Subtask(String name, TaskStatus status, String description, LocalDateTime startTime, Duration duration, int epicId) {
+        super(name, status, description, startTime, duration);
+        this.epicId = epicId;
+    }
+
+    public Subtask(int id, String name, TaskStatus status, String description, LocalDateTime startTime, Duration duration, int epicId) {
+        super(id, name, status, description, startTime, duration);
+        this.epicId = epicId;
+    }
+
     @Override
     public Integer getEpicId() {
         return epicId;
@@ -50,6 +61,9 @@ public class Subtask extends Task {
                 ", status='" + getStatus() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", epic ='" + getEpicId() + '\'' +
+                ", startTime=" + getStartTime() + '\'' +
+                ", endTime=" + getEndTime() + '\'' +
+                ", duration=" + getDuration() +
                 '}';
     }
 

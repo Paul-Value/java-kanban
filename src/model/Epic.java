@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class Epic extends Task {
     private List<Integer> subTasks = new ArrayList<>();
+    //private Duration duration;
 
     public Epic(String name, TaskStatus status, String description) {
 
@@ -43,7 +44,10 @@ public class Epic extends Task {
                 ", name='" + getName() + '\'' +
                 ", status='" + getStatus() + '\'' +
                 ", description='" + getDescription() + '\'' + "," + '\n' +
-                "subTasks=" + subTasks +
+                "subTasks=" + subTasks + '\'' +
+                ", startTime=" + getStartTime() + '\'' +
+                ", endTime=" + getEndTime() + '\'' +
+                ", duration=" + getDuration() +
                 '}';
     }
 
