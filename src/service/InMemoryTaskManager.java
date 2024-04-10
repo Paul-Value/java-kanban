@@ -168,14 +168,14 @@ public class InMemoryTaskManager implements TaskManager {
         Optional<LocalDateTime> epicStartTime = epic.getSubTasks().stream()
                 .map(subTasks::get)
                 .map(Subtask::getStartTime)
-                .filter(startTime -> startTime != null)
+                .filter(Objects::nonNull)
                 .min(LocalDateTime::compareTo);
         epicStartTime.ifPresent(epic::setStartTime);
 
         Optional<LocalDateTime> epicEndTime = epic.getSubTasks().stream()
                 .map(subTasks::get)
                 .map(Task::getEndTime)
-                .filter(endTime -> endTime != null)
+                .filter(Objects::nonNull)
                 .max(LocalDateTime::compareTo);
         epicEndTime.ifPresent(epic::setEndTime);
         if (epicStartTime.isPresent() && epicEndTime.isPresent()) {

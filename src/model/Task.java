@@ -33,16 +33,12 @@ public class Task {
         this.name = name;
         this.status = status;
         this.description = description;
-        //this.startTime = LocalDateTime.now();
-        //this.duration = Duration.ofMinutes(0);
-        //this.endTime = getEndTime();
     }
 
     public Task(String name, TaskStatus status, String description, LocalDateTime startTime, Duration duration) {
         this.name = name;
         this.status = status;
         this.description = description;
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyy HH:mm");
         this.startTime = startTime;
         this.duration = duration;
         this.endTime = getEndTime();
@@ -53,7 +49,6 @@ public class Task {
         this.name = name;
         this.status = status;
         this.description = description;
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyy HH:mm");
         this.startTime = startTime;
         this.duration = duration;
         this.endTime = getEndTime();
@@ -63,15 +58,7 @@ public class Task {
         this.name = name;
         this.status = status;
         this.description = description;
-        //this.startTime = LocalDateTime.now();
-        //this.duration = Duration.ofMinutes(0);
     }
-
-    /*public Task(String name) {
-        this.name = name;
-        this.startTime = LocalDateTime.now();
-        this.duration = Duration.ofMinutes(0);
-    }*/
 
     public Integer getEpicId() {
         return null;

@@ -14,6 +14,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     private final Map<Integer, Task> backedTasks = new HashMap<>();
     private final File file;
     public static final String TASK_CSV = "task.csv";
+    public static final String NULL_STRING = "null";
 
     public FileBackedTaskManager(File file) {
         this.file = file;
@@ -196,7 +197,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         LocalDateTime startTime = null;
         Duration duration = null;
 
-        if (!columns[6].equals("null") && !columns[7].equals("null")) {
+        if (!columns[6].equals(NULL_STRING) && !columns[7].equals(NULL_STRING)) {
             startTime = LocalDateTime.parse(columns[6]);
             duration = Duration.parse(columns[7]);
         }
