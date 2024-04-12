@@ -1,6 +1,8 @@
 package service;
 
 import com.sun.net.httpserver.HttpServer;
+import model.Epic;
+import model.Subtask;
 import model.Task;
 import model.TaskStatus;
 import service.handlers.*;
@@ -46,8 +48,12 @@ public class HttpTaskServer {
         TaskManager taskManager = Managers.getDefaultTaskManager();
         HttpTaskServer httpTaskServer = new HttpTaskServer(taskManager);
 
-        taskManager.createTask(new Task("Task with time 22", TaskStatus.NEW, "time task 22",
+        Task task = taskManager.createTask(new Task("Task with time 22", TaskStatus.NEW, "time task 22",
                 LocalDateTime.of(2024, 4, 3, 19, 30), Duration.ofMinutes(30)));
+        Epic epic1 = taskManager.createEpic(new Epic("Epic with time", TaskStatus.NEW, "time epic"));
+        Subtask subtask1 = taskManager.createSubTask(new Subtask("Subtask with time", TaskStatus.NEW,
+                "time subtask", LocalDateTime.of(2024, 4, 4, 15, 20),
+                Duration.ofMinutes(20), epic1.getId()));
         httpTaskServer.start();
     }
 }
