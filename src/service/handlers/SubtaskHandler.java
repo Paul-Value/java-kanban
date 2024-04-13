@@ -1,6 +1,7 @@
 package service.handlers;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import model.Subtask;
 import service.TaskManager;
@@ -8,11 +9,18 @@ import service.TaskManager;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class SubtaskHandler extends Handler {
     private final TaskManager taskManager;
-    Gson gson = new Gson();
+
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    Gson gson = gsonBuilder
+            .registerTypeAdapter(Duration.class, new DurationAdapter())
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+            .create();
     ErrorHandler errorHandler = new ErrorHandler();
 
     public SubtaskHandler(TaskManager taskManager) {
